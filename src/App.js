@@ -1,28 +1,28 @@
 import React, {useState} from 'react';
-// import logo from './logo.svg';
 import './App.css';
-// import Hello from './hello/hello';
 import Table from './table/table';
 
-
 function App(){
-  
-
+  const [currentPlayer, setState] = useState(1);
   const field = [
-    [1,0,0,0,0,0,0],
-    [2,1,0,0,0,0,0],
-    [2,2,1,0,0,0,0],
     [0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0],
-    [1,1,0,0,0,0,0],
+    [0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0],
   ];
 
-  const currentPlayer = 2;
+  function move(columnId){
+    alert('ход игрока ' + currentPlayer + '  в столбце  ' + columnId);
+    currentPlayer === 1 ? setState(2) : setState(1);
+    columnId--;
+    let position = field[columnId].indexOf(0);
 
-  function move(columnID){
-    alert('ход игрока ' + currentPlayer + '  в столбце  ' + columnID);
+    })
   }
+
 
     return (
       <div className="App">
