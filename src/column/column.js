@@ -13,8 +13,6 @@ function Column (props){
     <Cell value={props.data[6]}/>
   </div>
 )
-
-  // <p>{props.data}</p>
 }
 
 export default Column;
