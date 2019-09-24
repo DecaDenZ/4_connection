@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Cell (props){
-  return <span>{props.value}</span>
+  return <span class="cell">{props.value}</span>
 }
 
 export default Cell;

@@ -5,17 +5,18 @@ import './App.css';
 import Table from './table/table';
 
 function App() {
-   const [currentPlayer, setCurrentPlayer] = useState(1);
-   const [field, setField] = useState([
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-   ])
+  const START_GAME = [
+     [0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0],
+  ]
 
+   const [currentPlayer, setCurrentPlayer] = useState(1);
+   const [field, setField] = useState(START_GAME);
    function checkWin(arr, position) {
       let count = 1;
       for (let i = position; i > 0; i--) {
@@ -27,12 +28,17 @@ function App() {
    }
 
    function move(columnId) {
-      alert('ход игрока ' + currentPlayer + '  в столбце  ' + columnId);
       columnId--;
-      let position = field[columnId].indexOf(0);
-      field[columnId][position] = currentPlayer;
+      let arr = field[columnId];
+      if (arr.indexOf(0) === -1) {
+        alert('этот ряд заполнен');
+        return;
+      }
+      console.log('ход игрока ' + currentPlayer + '  в столбце  ' + columnId);
+      let position = arr.indexOf(0);
+      arr[position] = currentPlayer;
       setField(field);
-      if (checkWin(field[columnId], position)) {
+      if (checkWin(arr, position)) {
          endGame(currentPlayer);
       }
       currentPlayer === 1 ? setCurrentPlayer(2) : setCurrentPlayer(1);
@@ -40,15 +46,7 @@ function App() {
 
    function endGame(winner){
       alert('Победил игрок - ' + winner);
-      setField([
-         [0, 0, 0, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0],
-      ]);
+      setField(START_GAME);
    }
 
    return (
