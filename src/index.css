@@ -10,9 +10,29 @@ body {
 
 .column {
   padding: 10px;
+
 }
 
 .cell {
   border: solid 1px;
   padding: 10px;
+}
+.chip-red {
+  border: solid 1px;
+  border-radius: 50px;
+  padding: 5px;
+  border-color: darkred;
+  background-color: red;
+}
+
+.chip {
+  padding: 6px;
+  }
+
+.chip-blue {
+  border: solid 1px;
+  border-radius: 50px;
+  padding: 5px;
+  border-color: darkblue;
+  background-color: blue;
 }
