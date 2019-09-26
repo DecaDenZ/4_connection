@@ -2,13 +2,13 @@ import React from 'react';
 
 function Chip(props) {
   if (props.value === 0) {
-    return <span class = "chip" > < /span>
+    return <span className = "chip" > < /span>
   }
 
   if (props.value === 1) {
-    return <span class = "chip-red" > < /span>
+    return <span className = "chip-red" > < /span>
   } else {
-    return <span class = "chip-blue" > < /span>
+    return <span className = "chip-blue" > < /span>
   }
 }
 

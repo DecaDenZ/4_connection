@@ -3,7 +3,7 @@ import Cell from '../cell/cell';
 
 function Column (props){
   return (
-  <div class="column" onClick={() => props.onColumnPress(props.columnId) }>
+  <div className="column" onClick={() => props.onColumnPress(props.columnId) }>
     <Cell value={props.data[0]}/>
     <Cell value={props.data[1]}/>
     <Cell value={props.data[2]}/>
