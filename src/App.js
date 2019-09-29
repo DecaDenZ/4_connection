@@ -1,77 +1,14 @@
-import React, {
-  useState
-} from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import Table from './table/table';
+import Game from './game';
+import {HashRouter} from 'react-router-dom';
+import Welcome from './welcome';
+import {Route} from 'react-router-dom';
 
 function App() {
-  const START_GAME = [
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-  ]
-
-  const [currentPlayer, setCurrentPlayer] = useState(1);
-  const [field, setField] = useState(START_GAME);
-
-  function checkWin(arr, position) {
-    let count = 1;
-    for (let i = position; i > 0; i--) {
-      if (arr[i] === arr[i - 1]) {
-        count++;
-        if (count === 4) return true;
-      } else return false;
-    }
-  }
-
-  function checkFullColumn(arr) {
-    if (arr.indexOf(0) === -1) {
-      alert('этот ряд заполнен');
-      return true;
-    }
-  }
-
-  function checkNoMove() {
-    for (let i = 0; i <= 6; i++) {
-      console.log(field[i][5]);
-      if (field[i][5] === 0) return false;
-    }
-    alert('ходов больше нет');
-    return true;
-  }
-
-  function move(columnId) {
-    columnId--;
-    let arr = field[columnId];
-    if (checkFullColumn(arr)) return;
-    console.log('ход игрока ' + currentPlayer + '  в столбце  ' + columnId);
-    let position = arr.indexOf(0);
-    arr[position] = currentPlayer;
-    setField(field);
-    if (checkWin(arr, position)) {
-      endGame(currentPlayer);
-    }
-    currentPlayer === 1 ? setCurrentPlayer(2) : setCurrentPlayer(1);
-    if (checkNoMove()) setField(START_GAME);
-  }
-
-  function endGame(winner) {
-    alert('Победил игрок - ' + winner);
-    setField(START_GAME);
-  }
-
-  return (
-    <div className = "App" >
-            <Table onColumnPress = {move}
-                   currentPlayer = {currentPlayer}
-                   field = {field}
-            />
-    </div>
-  );
+ return <HashRouter>
+<Route path="/" exact component={Welcome}/>
+<Route path="/game" component={Game}/>
+</HashRouter>
 }
-
 export default App;
