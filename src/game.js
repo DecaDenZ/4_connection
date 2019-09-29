@@ -33,14 +33,15 @@ function Game(props) {
 
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [field, setField] = useState(START_GAME);
+  const [isEndGame, setIsEndGame] = useState(false);
 
   if (!props.location.state){
     return <Redirect to="/"/>
   }
 
-//   if (checkWin){
-//   return (<Link to="/">Заново</Link>)
-// }
+  if (isEndGame === true){
+    return <Redirect to="/endGame"/>
+  }
 
   function checkWin(arr, position) {
     let count = 1;
@@ -83,10 +84,7 @@ function Game(props) {
 
   function endGame(winner) {
     alert('Победил игрок - ' + winner);
-    setField(START_GAME);
-    return (<Link to={{
-        pathname:'/',
-      }}>Заново</Link>);
+    setIsEndGame(true);
   }
 
   return (
@@ -98,9 +96,6 @@ function Game(props) {
                    currentPlayer={currentPlayer}
                    field={field}
             />
-            <Link to={{
-                pathname:'/',
-              }}>Заново</Link>
     </div>
   );
 }
