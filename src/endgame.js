@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom';
 
 function EndGame(props){
   return(
-<div>
-  <div>Конец игры</div>
+<div className="endGame">
+  <h1>Конец игры</h1>
   <Link to={{
     pathname:'/game',
     state:{
