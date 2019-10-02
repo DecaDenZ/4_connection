@@ -4,7 +4,6 @@ import React, {
 import './App.css';
 import Table from './table/table';
 import {Redirect} from 'react-router-dom';
-import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 function Game(props) {
@@ -18,30 +17,25 @@ function Game(props) {
     [0, 0, 0, 0, 0, 0],
   ]
 
+  const player1Name = props.location.state.player1Name;
+  const player2Name = props.location.state.player2Name;
+
+  const [currentPlayer, setCurrentPlayer] = useState(1);
+  const [field, setField] = useState(START_GAME);
+  const [isEndGame, setIsEndGame] = useState(false);
+
   useEffect(()=>{
   const intervalID = setInterval(
     axios.get('http://localhost:4000/info').then((response)=>{
       console.log(response);
       setField(response.data.field);
-      setCurrentPlayer(response.data.currentPlayer);
+      // setCurrentPlayer(response.data.currentPlayer);
     }),
      2000
    );
    return () => {clearInterval(intervalID);
    }
  }, []);
-
-  const [currentPlayer, setCurrentPlayer] = useState(1);
-  const [field, setField] = useState(START_GAME);
-  const [isEndGame, setIsEndGame] = useState(false);
-
-  if (!props.location.state){
-    return <Redirect to="/"/>
-  }
-
-  if (isEndGame === true){
-    return <Redirect to="/endGame"/>
-  }
 
   function checkWin(arr, position) {
     let count = 1;
@@ -77,23 +71,44 @@ function Game(props) {
     setField(field);
     if (checkWin(arr, position)) {
       endGame(currentPlayer);
+      return;
     }
     currentPlayer === 1 ? setCurrentPlayer(2) : setCurrentPlayer(1);
     if (checkNoMove()) setField(START_GAME);
   }
 
   function endGame(winner) {
-    alert('Победил игрок - ' + winner);
+    setCurrentPlayer(winner);
     setIsEndGame(true);
+  }
+
+  console.log(props.location.state)
+
+  if (!props.location.state.player1Name || !props.location.state.player2Name){
+    alert('Введите имя игрока');
+    return <Redirect to="/"/>
+  }
+
+  if (isEndGame === true){
+    return <Redirect to={{
+      pathname:'/endGame',
+      state:{
+        currentPlayer: currentPlayer,
+        player1Name: player1Name,
+        player2Name: player2Name
+      }
+    }}/>
   }
 
   return (
     <div className="App" >
-      <p>{props.location.state.player1Name}</p>
+      <p>{player1Name}</p>
       vs
-      <p>{props.location.state.player2Name}</p>
+      <p>{player2Name}</p>
             <Table onColumnPress={move}
                    currentPlayer={currentPlayer}
+                   player1Name={player1Name}
+                   player2Name={player2Name}
                    field={field}
             />
     </div>

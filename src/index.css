@@ -1,7 +1,8 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 50px;
   font-family: sans-serif;
+  border: solid 3px;
 }
 
 .table {
@@ -10,7 +11,6 @@ body {
 
 .column {
   padding: 10px;
-
 }
 
 .cell {
@@ -38,5 +38,9 @@ body {
 }
 
 .endGame {
+  text-align: center;
+}
+
+.startScreen {
   text-align: center;
 }

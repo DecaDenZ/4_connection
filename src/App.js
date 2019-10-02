@@ -3,12 +3,12 @@ import {HashRouter} from 'react-router-dom';
 import {Route} from 'react-router-dom';
 import './App.css';
 import Game from './game';
-import Welcome from './welcome';
+import StartScreen from './startscreen';
 import EndGame from './endgame';
 
 function App() {
  return <HashRouter>
-<Route path="/" exact component={Welcome}/>
+<Route path="/" exact component={StartScreen}/>
 <Route path="/game" component={Game}/>
 <Route path="/endGame" component={EndGame}/>
 </HashRouter>

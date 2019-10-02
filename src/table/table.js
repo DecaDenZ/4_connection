@@ -2,9 +2,16 @@ import React from 'react';
 import Column from '../column/column';
 
 export default function Table (props){
+  var currentPlayer = props.currentPlayer;
+  if (currentPlayer === 1){
+    currentPlayer = props.player1Name;
+  } else {
+    currentPlayer = props.player2Name;
+  }
+
   return (
   <div>
-    <p>Ход игрока {props.currentPlayer}</p>
+    <p>Ход игрока {currentPlayer}</p>
     <div className="table">
       <Column columnId='1' onColumnPress={props.onColumnPress} data={props.field[0]}/>
       <Column columnId='2' onColumnPress={props.onColumnPress} data={props.field[1]}/>
