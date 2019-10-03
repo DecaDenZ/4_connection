@@ -30,7 +30,7 @@ function Game(props) {
 
   useEffect(() => {
       const intervalID = setInterval(
-        axios.get('http://localhost:4000/info')
+        axios.get('http://localhost:4000/game')
         .then((response) => {
           console.log(response);
           setField(response.data.field);
