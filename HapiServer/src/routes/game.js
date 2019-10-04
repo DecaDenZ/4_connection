@@ -1,22 +1,9 @@
-async function move(){
-  return {
-    field: [
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-    ],
-    currentPlayer: 1
-  };
-}
+import * from '../env/const';
 
 module.exports = {
   method: 'GET',
   path: '/game',
-  options: {
-    handler: move
+  handler: (res, req) => {
+    return {field};
   }
 };

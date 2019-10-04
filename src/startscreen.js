@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 function StartScreen(){
 
-  const [player1Name, setPlayer1Name] = useState();
-  const [player2Name, setPlayer2Name] = useState();
+  const [player1Name, setPlayer1Name] = useState('Player1');
+  const [player2Name, setPlayer2Name] = useState('Player2');
 
   return (
     <div className="startScreen">

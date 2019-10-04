@@ -30,7 +30,7 @@ function Game(props) {
 
   useEffect(() => {
       const intervalID = setInterval(
-        axios.get('http://localhost:4000/game')
+        axios.get('http://localhost:4000/game/status')
         .then((response) => {
           console.log(response);
           setField(response.data.field);
@@ -156,7 +156,19 @@ function Game(props) {
     if (checkFullColumn(arr)) return;
     let position = arr.indexOf(0);
     arr[position] = currentPlayer;
-    setField(field);
+    // setField(field);
+// здесь отправляем запрос на изменение состояния field на сервер
+    axios.post('http://localhost:4000/game',{field: field})
+    .then((res)=> {
+      console.log(res.data);
+      // setField(res.data);
+      // console.log(field);
+    })
+    .catch((error)=> {
+      console.log(error);
+    });
+
+// --------
     if (checkWin(columnId, position)) {
       endGame(currentPlayer);
       return;
