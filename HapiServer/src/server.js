@@ -1,8 +1,8 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
-const filepaths = require('filepaths');
-const hapiBoomDecorators = require('hapi-boom-decorators');
+// const filepaths = require('filepaths');
+// const hapiBoomDecorators = require('hapi-boom-decorators');
 
 let field = [
   [0, 0, 0, 0, 0, 0],
@@ -29,20 +29,17 @@ async function createServer() {
   });
 
   // Регистрируем расширение
-  await server.register([
-    hapiBoomDecorators
-  ]);
+  // await server.register([
+    // hapiBoomDecorators
+  // ]);
 
   server.route({
     method: 'POST',
     path: '/game',
-    options: {
-      cors: true,
-      handler: (req, res) => {
+    handler: (req, res) => {
         field = req.body;
         return(req.payload.field);
       }
-    }
   });
 
   server.route({
@@ -56,11 +53,10 @@ async function createServer() {
     }
   });
 
-
-// из презентации
-  function getFreeCell(columnId) {
-    return field[columnId].lastIndexOf(0);
-}
+  // из презентации
+  // function getFreeCell(columnId) {
+    // return field[columnId].lastIndexOf(0);
+// }
 
 
   // Загружаем все руты из папки ./src/routes/
@@ -72,11 +68,10 @@ async function createServer() {
   try {
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);
-  } catch (err) { // если не смогли стартовать, выводим ошибку
+  } catch (err) {
     console.log(JSON.stringify(err));
   }
 
-  // Функция должна возвращать созданый сервер
   return server;
 }
 

@@ -73,7 +73,7 @@ function Game(props) {
     }
     return (count === 4) ? true : false;
   }
-
+  // проверка по горизонтали
   function checkWinHorizontal(column, row){
     let currentPlayer = field[column][row];
     let count = 0;
@@ -151,24 +151,24 @@ function Game(props) {
 
   // сам ход
   function move(columnId) {
+
     columnId--;
     let arr = field[columnId];
     if (checkFullColumn(arr)) return;
     let position = arr.indexOf(0);
     arr[position] = currentPlayer;
+
     // setField(field);
+
 // здесь отправляем запрос на изменение состояния field на сервер
     axios.post('http://localhost:4000/game',{field: field})
     .then((res)=> {
       console.log(res.data);
-      // setField(res.data);
-      // console.log(field);
     })
     .catch((error)=> {
       console.log(error);
     });
 
-// --------
     if (checkWin(columnId, position)) {
       endGame(currentPlayer);
       return;
