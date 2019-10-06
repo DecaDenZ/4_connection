@@ -8,6 +8,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import axios from 'axios';
+// import PropTypes from 'prop-types';
 
 function Game(props) {
 
@@ -27,6 +28,10 @@ function Game(props) {
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [field, setField] = useState(START_GAME);
   const [isEndGame, setIsEndGame] = useState(false);
+
+  // Game.propTypes ={
+    // player1Name: PropTypes.string.isRequired
+  // }
 
   useEffect(() => {
       const intervalID = setInterval(
@@ -163,7 +168,7 @@ function Game(props) {
 // здесь отправляем запрос на изменение состояния field на сервер
     axios.post('http://localhost:4000/game',{field: field})
     .then((res)=> {
-      console.log(res.data);
+      setField(res.data);
     })
     .catch((error)=> {
       console.log(error);

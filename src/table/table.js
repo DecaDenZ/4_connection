@@ -1,6 +1,7 @@
 import React from 'react';
 import Column from '../column/column';
 
+
 export default function Table (props){
   var currentPlayer = props.currentPlayer;
   if (currentPlayer === 1){
