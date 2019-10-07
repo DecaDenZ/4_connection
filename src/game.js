@@ -1,12 +1,7 @@
-import React, {
-  useState,
-  useEffect
-} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import Table from './table/table';
-import {
-  Redirect
-} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 // import PropTypes from 'prop-types';
 
@@ -156,19 +151,20 @@ function Game(props) {
 
   // сам ход
   function move(columnId) {
-
     columnId--;
     let arr = field[columnId];
     if (checkFullColumn(arr)) return;
     let position = arr.indexOf(0);
     arr[position] = currentPlayer;
 
-    // setField(field);
-
 // здесь отправляем запрос на изменение состояния field на сервер
-    axios.post('http://localhost:4000/game',{field: field})
+    axios
+    .post(
+      'http://localhost:4000/game',
+      {field: field, currentPlayer: currentPlayer})
     .then((res)=> {
-      setField(res.data);
+      setField(res.data.field);
+      setCurrentPlayer(res.data.currentPlayer);
     })
     .catch((error)=> {
       console.log(error);
@@ -178,8 +174,7 @@ function Game(props) {
       endGame(currentPlayer);
       return;
     }
-    currentPlayer === 1 ? setCurrentPlayer(2) : setCurrentPlayer(1);
-    if (checkNoMove()) setField(START_GAME);
+    // if (checkNoMove()) setField(START_GAME);
   }
 
 

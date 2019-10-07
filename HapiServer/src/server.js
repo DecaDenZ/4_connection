@@ -37,8 +37,10 @@ async function createServer() {
     method: 'POST',
     path: '/game',
     handler: (req, res) => {
-        field = req.body;
-        return(req.payload.field);
+        field = req.payload.field;
+        currentPlayer = req.payload.currentPlayer;
+        currentPlayer = currentPlayer === 1 ? 2 : 1;
+        return({field, currentPlayer});
       }
   });
 
