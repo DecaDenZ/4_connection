@@ -12,8 +12,9 @@ let field = [
   [0, 0, 0, 0, 0, 0],
 ];
 
+let isEndGame = false;
+
 let currentPlayer = 1;
-// const [field, setField] = useState(START_GAME);
 
 // -------логика игры ----------
 
@@ -145,10 +146,12 @@ async function createServer() {
     handler: (req, res) => {
         field = req.payload.field;
         currentPlayer = req.payload.currentPlayer;
-        column = req.payload.column;
-        raw = req.payload.raw;
+        const column = req.payload.column;
+        const raw = req.payload.raw;
+        console.log(req);
         if (checkNoMove()){
           field = START_GAME;
+          cosole.table(field);
           return({field, currentPlayer, isEndGame});
         }
         if (checkWin(column, raw)){
@@ -171,11 +174,6 @@ async function createServer() {
       };
     }
   });
-
-  // из презентации
-  // function getFreeCell(columnId) {
-    // return field[columnId].lastIndexOf(0);
-// }
 
   // Запускаем сервер
   try {

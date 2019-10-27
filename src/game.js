@@ -41,93 +41,6 @@ function Game(props) {
     []
   );
 
-  // проверяем является ли ход победным
-  // function checkWin(column, row) {
-  //   if (checkWinVertical(column, row)){
-  //     return true;
-  //   } else {
-  //     if (checkWinDiagonal(column, row)) {
-  //       return true;
-  //     } else {
-  //       if (checkWinHorizontal(column, row)){
-  //         return true
-  //       } else {
-  //         return false
-  //       }
-  //     }
-  //   }
-  // }
-
-  // проверка по вертикали
-  // function checkWinVertical(column, row){
-  //   let count = 1;
-  //   for (let i = row; i > 0; i--) {
-  //     if (field[column][i] === field[column][i - 1]) {
-  //       count++;
-  //     }
-  //   }
-  //   return (count === 4) ? true : false;
-  // }
-
-  // проверка по горизонтали
-  // function checkWinHorizontal(column, row){
-  //   let currentPlayer = field[column][row];
-  //   let count = 0;
-  //   for (let i = 0; i < 7; i++){
-  //     if (field[i][row] === currentPlayer){
-  //       count++;
-  //     } else {
-  //       count = 0;
-  //     }
-  //     if (count === 4) return true;
-  //   }
-  //   return false;
-  // }
-
-  //проверка по диагонали
-  // function checkWinDiagonal(column, row){
-  //   //сохраняем начальное значение позиции
-  //   let reserveColumn = column;
-  //   let reserveRow = row;
-  //
-  //   let count = 0;
-  //   let currentPlayer = field[column][row];
-  //   // проверка слева вправо
-  //   //находим начало диагонали
-  //   if (column > 0 && row > 0){
-  //     let min = Math.min(column, row);
-  //     column -= min;
-  //     row -= min;
-  //   }
-  //   while (column < 7 && row < 6) {
-  //     if (field[column][row] === currentPlayer){
-  //       count++;
-  //     } else count = 0;
-  //
-  //     if (count === 4) return true
-  //     column++; row++;
-  //   }
-  //   //возвращаем начальное значение позиции
-  //   column = reserveColumn;
-  //   row = reserveRow;
-  //   // проверка справа налево
-  //   //находим начало диагонали
-  //   if (column < 6 && row > 0){
-  //     let min = Math.min((6 - column), row);
-  //     column += min;
-  //     row -= min;
-  //   }
-  //
-  //   while (column >= 0 && row < 6) {
-  //     if (field[column][row] === currentPlayer){
-  //       count++;
-  //     } else count = 0;
-  //     if (count === 4) return true
-  //     column--; row++;
-  //   }
-  //   return false;
-  // }
-
   //проверяем заполнен ли ряд, если да, ход не засчитывается, перехода хода нет
   function checkFullColumn(arr) {
     if (arr.indexOf(0) === -1) {
@@ -156,24 +69,24 @@ function Game(props) {
 
 // здесь отправляем запрос на изменение состояния field на сервер
     axios
-    .post(
-      'http://localhost:4000/game',
-      {field: field, currentPlayer: currentPlayer, column: columnId, raw: position })
-    .then((res)=> {
-      setField(res.data.field);
-      setCurrentPlayer(res.data.currentPlayer);
-      setIsEndGame(res.data.isEndGame);
-    })
-    .catch((error)=> {
-      console.log(error);
-    });
+      .post(
+        'http://localhost:4000/game',
+        {field: field, currentPlayer: currentPlayer, column: columnId, raw: position }
+      )
+      .then((res)=> {
+        setField(res.data.field);
+        setCurrentPlayer(res.data.currentPlayer);
+        setIsEndGame(res.data.isEndGame);
+      })
+      .catch((error)=> {
+        console.log(error);
+      });
 
   //  if (checkWin(columnId, position)) {
       // endGame(currentPlayer);
       // return;
     // }
     // if (checkNoMove()) setField(START_GAME);
-
   }
 
 
