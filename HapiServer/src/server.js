@@ -1,5 +1,5 @@
 'use strict';
-
+// import React, {useState} from 'react';
 const Hapi = require('@hapi/hapi');
 
 let field = [
@@ -13,6 +13,7 @@ let field = [
 ];
 
 let currentPlayer = 1;
+// const [field, setField] = useState(START_GAME);
 
 // -------логика игры ----------
 
@@ -43,6 +44,7 @@ function checkWinVertical(column, row){
   }
   return (count === 4) ? true : false;
 }
+
 // проверка по горизонтали
 function checkWinHorizontal(column, row){
   let currentPlayer = field[column][row];
@@ -119,6 +121,12 @@ function checkNoMove() {
   return true;
 }
 
+function endGame(winner) {
+  currentPlayer = winner;
+  // setIsEndGame(true);
+  isEndGame = true;
+}
+
 // ----- сервер и роуы ---------
 
 async function createServer() {
@@ -139,8 +147,17 @@ async function createServer() {
         currentPlayer = req.payload.currentPlayer;
         column = req.payload.column;
         raw = req.payload.raw;
+        if (checkNoMove()){
+          field = START_GAME;
+          return({field, currentPlayer, isEndGame});
+        }
+        if (checkWin(column, raw)){
+          // endGame(currentPlayer);
+          isEndGame = true;
+          return({field, currentPlayer, isEndGame});
+        }
         currentPlayer = currentPlayer === 1 ? 2 : 1;
-        return({field, currentPlayer});
+        return({field, currentPlayer, isEndGame});
       }
   });
 

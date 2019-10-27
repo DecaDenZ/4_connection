@@ -3,7 +3,6 @@ import './App.css';
 import Table from './table/table';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
-// import PropTypes from 'prop-types';
 
 function Game(props) {
 
@@ -24,10 +23,6 @@ function Game(props) {
   const [field, setField] = useState(START_GAME);
   const [isEndGame, setIsEndGame] = useState(false);
 
-  // Game.propTypes ={
-    // player1Name: PropTypes.string.isRequired
-  // }
-
   useEffect(() => {
       const intervalID = setInterval(
         axios.get('http://localhost:4000/game/status')
@@ -47,90 +42,91 @@ function Game(props) {
   );
 
   // проверяем является ли ход победным
-  function checkWin(column, row) {
-    if (checkWinVertical(column, row)){
-      return true;
-    } else {
-      if (checkWinDiagonal(column, row)) {
-        return true;
-      } else {
-        if (checkWinHorizontal(column, row)){
-          return true
-        } else {
-          return false
-        }
-      }
-    }
-  }
+  // function checkWin(column, row) {
+  //   if (checkWinVertical(column, row)){
+  //     return true;
+  //   } else {
+  //     if (checkWinDiagonal(column, row)) {
+  //       return true;
+  //     } else {
+  //       if (checkWinHorizontal(column, row)){
+  //         return true
+  //       } else {
+  //         return false
+  //       }
+  //     }
+  //   }
+  // }
 
   // проверка по вертикали
-  function checkWinVertical(column, row){
-    let count = 1;
-    for (let i = row; i > 0; i--) {
-      if (field[column][i] === field[column][i - 1]) {
-        count++;
-      }
-    }
-    return (count === 4) ? true : false;
-  }
+  // function checkWinVertical(column, row){
+  //   let count = 1;
+  //   for (let i = row; i > 0; i--) {
+  //     if (field[column][i] === field[column][i - 1]) {
+  //       count++;
+  //     }
+  //   }
+  //   return (count === 4) ? true : false;
+  // }
+
   // проверка по горизонтали
-  function checkWinHorizontal(column, row){
-    let currentPlayer = field[column][row];
-    let count = 0;
-    for (let i = 0; i < 7; i++){
-      if (field[i][row] === currentPlayer){
-        count++;
-      } else {
-        count = 0;
-      }
-      if (count === 4) return true;
-    }
-    return false;
-  }
+  // function checkWinHorizontal(column, row){
+  //   let currentPlayer = field[column][row];
+  //   let count = 0;
+  //   for (let i = 0; i < 7; i++){
+  //     if (field[i][row] === currentPlayer){
+  //       count++;
+  //     } else {
+  //       count = 0;
+  //     }
+  //     if (count === 4) return true;
+  //   }
+  //   return false;
+  // }
 
   //проверка по диагонали
-  function checkWinDiagonal(column, row){
-    //сохраняем начальное значение позиции
-    let reserveColumn = column;
-    let reserveRow = row;
-
-    let count = 0;
-    let currentPlayer = field[column][row];
-    // проверка слева вправо
-    //находим начало диагонали
-    if (column > 0 && row > 0){
-      let min = Math.min(column, row);
-      column -= min;
-      row -= min;
-    }
-    while (column < 7 && row < 6) {
-      if (field[column][row] === currentPlayer){
-        count++;
-      } else count = 0;
-
-      if (count === 4) return true
-      column++; row++;
-    }
-    //возвращаем начальное значение позиции
-    column = reserveColumn;
-    row = reserveRow;
-    // проверка справа налево
-    //находим начало диагонали
-    if (column < 6 && row > 0){
-      let min = Math.min((6 - column), row);
-      column += min;
-      row -= min;
-    }
-
-    while (column >= 0 && row < 6) {
-      if (field[column][row] === currentPlayer){
-        count++;
-      } else count = 0;
-      if (count === 4) return true
-      column--; row++;
-    }
-    return false;
-  }
+  // function checkWinDiagonal(column, row){
+  //   //сохраняем начальное значение позиции
+  //   let reserveColumn = column;
+  //   let reserveRow = row;
+  //
+  //   let count = 0;
+  //   let currentPlayer = field[column][row];
+  //   // проверка слева вправо
+  //   //находим начало диагонали
+  //   if (column > 0 && row > 0){
+  //     let min = Math.min(column, row);
+  //     column -= min;
+  //     row -= min;
+  //   }
+  //   while (column < 7 && row < 6) {
+  //     if (field[column][row] === currentPlayer){
+  //       count++;
+  //     } else count = 0;
+  //
+  //     if (count === 4) return true
+  //     column++; row++;
+  //   }
+  //   //возвращаем начальное значение позиции
+  //   column = reserveColumn;
+  //   row = reserveRow;
+  //   // проверка справа налево
+  //   //находим начало диагонали
+  //   if (column < 6 && row > 0){
+  //     let min = Math.min((6 - column), row);
+  //     column += min;
+  //     row -= min;
+  //   }
+  //
+  //   while (column >= 0 && row < 6) {
+  //     if (field[column][row] === currentPlayer){
+  //       count++;
+  //     } else count = 0;
+  //     if (count === 4) return true
+  //     column--; row++;
+  //   }
+  //   return false;
+  // }
 
   //проверяем заполнен ли ряд, если да, ход не засчитывается, перехода хода нет
   function checkFullColumn(arr) {
@@ -141,13 +137,13 @@ function Game(props) {
   }
 
   //проверяем есь ли возможнось хода
-  function checkNoMove() {
-    for (let i = 0; i <= 6; i++) {
-      if (field[i][5] === 0) return false;
-    }
-    alert('ходов больше нет');
-    return true;
-  }
+  // function checkNoMove() {
+  //   for (let i = 0; i <= 6; i++) {
+  //     if (field[i][5] === 0) return false;
+  //   }
+  //   alert('ходов больше нет');
+  //   return true;
+  // }
 
   // сам ход
   function move(columnId) {
@@ -155,33 +151,36 @@ function Game(props) {
     let arr = field[columnId];
     if (checkFullColumn(arr)) return;
     let position = arr.indexOf(0);
+
     arr[position] = currentPlayer;
 
 // здесь отправляем запрос на изменение состояния field на сервер
     axios
     .post(
       'http://localhost:4000/game',
-      {field: field, currentPlayer: currentPlayer})
+      {field: field, currentPlayer: currentPlayer, column: columnId, raw: position })
     .then((res)=> {
       setField(res.data.field);
       setCurrentPlayer(res.data.currentPlayer);
+      setIsEndGame(res.data.isEndGame);
     })
     .catch((error)=> {
       console.log(error);
     });
 
-    if (checkWin(columnId, position)) {
-      endGame(currentPlayer);
-      return;
-    }
+  //  if (checkWin(columnId, position)) {
+      // endGame(currentPlayer);
+      // return;
+    // }
     // if (checkNoMove()) setField(START_GAME);
+
   }
 
 
-  function endGame(winner) {
-    setCurrentPlayer(winner);
-    setIsEndGame(true);
-  }
+  // function endGame(winner) {
+    // setCurrentPlayer(winner);
+    // setIsEndGame(true);
+  // }
 
   // проверка введено ли что-то в поля имен, можно добавить проверку по каждому из полей,
   // если проверка не прошла возвра на стартовую сраницу
