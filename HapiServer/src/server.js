@@ -148,10 +148,8 @@ async function createServer() {
         currentPlayer = req.payload.currentPlayer;
         const column = req.payload.column;
         const raw = req.payload.raw;
-        console.log(req);
         if (checkNoMove()){
           field = START_GAME;
-          cosole.table(field);
           return({field, currentPlayer, isEndGame});
         }
         if (checkWin(column, raw)){

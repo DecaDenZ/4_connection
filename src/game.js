@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import Table from './table/table';
+import Table from './components/table/table';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
@@ -49,15 +49,6 @@ function Game(props) {
     }
   }
 
-  //проверяем есь ли возможнось хода
-  // function checkNoMove() {
-  //   for (let i = 0; i <= 6; i++) {
-  //     if (field[i][5] === 0) return false;
-  //   }
-  //   alert('ходов больше нет');
-  //   return true;
-  // }
-
   // сам ход
   function move(columnId) {
     columnId--;
@@ -81,19 +72,7 @@ function Game(props) {
       .catch((error)=> {
         console.log(error);
       });
-
-  //  if (checkWin(columnId, position)) {
-      // endGame(currentPlayer);
-      // return;
-    // }
-    // if (checkNoMove()) setField(START_GAME);
   }
-
-
-  // function endGame(winner) {
-    // setCurrentPlayer(winner);
-    // setIsEndGame(true);
-  // }
 
   // проверка введено ли что-то в поля имен, можно добавить проверку по каждому из полей,
   // если проверка не прошла возвра на стартовую сраницу
