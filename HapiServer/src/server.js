@@ -118,7 +118,6 @@ function checkNoMove() {
   for (let i = 0; i <= 6; i++) {
     if (field[i][5] === 0) return false;
   }
-  alert('ходов больше нет');
   return true;
 }
 
