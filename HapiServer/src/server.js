@@ -2,7 +2,7 @@
 // import React, {useState} from 'react';
 const Hapi = require('@hapi/hapi');
 
-let field = [
+const START_GAME = [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
@@ -12,8 +12,8 @@ let field = [
   [0, 0, 0, 0, 0, 0],
 ];
 
+let field = START_GAME;
 let isEndGame = false;
-
 let currentPlayer = 1;
 
 // -------логика игры ----------
@@ -122,11 +122,11 @@ function checkNoMove() {
   return true;
 }
 
-function endGame(winner) {
-  currentPlayer = winner;
-  // setIsEndGame(true);
-  isEndGame = true;
-}
+// function endGame(winner) {
+//   currentPlayer = winner;
+//   field = START_GAME;
+//   isEndGame = true;
+// }
 
 // ----- сервер и роуы ---------
 
@@ -148,12 +148,14 @@ async function createServer() {
         currentPlayer = req.payload.currentPlayer;
         const column = req.payload.column;
         const raw = req.payload.raw;
+        isEndGame = false;
         if (checkNoMove()){
           field = START_GAME;
           return({field, currentPlayer, isEndGame});
         }
         if (checkWin(column, raw)){
-          // endGame(currentPlayer);
+          field = START_GAME;
+          console.log(field);
           isEndGame = true;
           return({field, currentPlayer, isEndGame});
         }
