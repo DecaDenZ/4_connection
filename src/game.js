@@ -6,6 +6,7 @@ import axios from 'axios';
 
 function Game(props) {
 
+//нужно убрать отсюда, но сделать обнуление состояния поля при старте игры
   const START_GAME = [
     [0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0],
@@ -56,13 +57,11 @@ function Game(props) {
     if (checkFullColumn(arr)) return;
     let position = arr.indexOf(0);
 
-    arr[position] = currentPlayer;
-
 // здесь отправляем запрос на изменение состояния field на сервер
     axios
       .post(
         'http://localhost:4000/game',
-        {field: field, currentPlayer: currentPlayer, column: columnId, raw: position }
+        {currentPlayer: currentPlayer, column: columnId, raw: position, isEndGame: isEndGame }
       )
       .then((res)=> {
         setField(res.data.field);

@@ -12,20 +12,18 @@ const START_GAME = [
 ];
 
 let field = START_GAME;
-let isEndGame = false;
 let currentPlayer = 1;
-
 // -------логика игры ----------
 
 // проверяем является ли ход победным
-function checkWin(column, row) {
+function checkWin(column, row, currentPlayer) {
   if (checkWinVertical(column, row)){
     return true;
   } else {
-    if (checkWinDiagonal(column, row)) {
+    if (checkWinDiagonal(column, row, currentPlayer)) {
       return true;
     } else {
-      if (checkWinHorizontal(column, row)){
+      if (checkWinHorizontal(column, row, currentPlayer)){
         return true
       } else {
         return false
@@ -46,8 +44,7 @@ function checkWinVertical(column, row){
 }
 
 // проверка по горизонтали
-function checkWinHorizontal(column, row){
-  let currentPlayer = field[column][row];
+function checkWinHorizontal(column, row, currentPlayer){
   let count = 0;
   for (let i = 0; i < 7; i++){
     if (field[i][row] === currentPlayer){
@@ -61,13 +58,12 @@ function checkWinHorizontal(column, row){
 }
 
 //проверка по диагонали
-function checkWinDiagonal(column, row){
+function checkWinDiagonal(column, row, currentPlayer){
   //сохраняем начальное значение позиции
   let reserveColumn = column;
   let reserveRow = row;
 
   let count = 0;
-  let currentPlayer = field[column][row];
   // проверка слева вправо
   //находим начало диагонали
   if (column > 0 && row > 0){
@@ -142,17 +138,17 @@ async function createServer() {
     method: 'POST',
     path: '/game',
     handler: (req, res) => {
-        field = req.payload.field;
-        currentPlayer = req.payload.currentPlayer;
         const column = req.payload.column;
         const raw = req.payload.raw;
-        isEndGame = false;
+        currentPlayer = req.payload.currentPlayer;
+        let isEndGame = req.payload.isEndGame;
+        field[column][raw] = currentPlayer;
         if (checkNoMove()){
           field = START_GAME;
           return({field, currentPlayer, isEndGame});
         }
         if (checkWin(column, raw)){
-          // field = START_GAME;
+          field = START_GAME;
           isEndGame = true;
           return({field, currentPlayer, isEndGame});
         }
