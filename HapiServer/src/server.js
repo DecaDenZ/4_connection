@@ -11,7 +11,7 @@ const START_GAME = [
   [0, 0, 0, 0, 0, 0],
 ];
 
-let field = START_GAME;
+let field = START_GAME.slice();
 let currentPlayer = 1;
 // -------логика игры ----------
 
@@ -135,6 +135,16 @@ async function createServer() {
   });
 
   server.route({
+    method: 'PATCH',
+    path: '/game',
+    handler: (req, res) => {
+      field = START_GAME.slice();
+      console.log(field, 'START_GAME', START_GAME);
+      return(field);
+    }
+  });
+
+  server.route({
     method: 'POST',
     path: '/game',
     handler: (req, res) => {
@@ -145,11 +155,12 @@ async function createServer() {
         field[column][raw] = currentPlayer;
 
         if (checkNoMove()){
-          field = START_GAME;
+          console.log('нет ходов');
+          field = 'noMove'; // обозначаем полю значение, указывающее на отсутствие ходов
           return({field, currentPlayer, isEndGame});
         }
         if (checkWin(column, raw, currentPlayer)){
-          field = START_GAME;
+          field = START_GAME.slice();
           isEndGame = true;
           return({field, currentPlayer, isEndGame});
         }
@@ -161,7 +172,7 @@ async function createServer() {
   server.route({
     method: 'GET',
     path: '/game/status',
-    handler: (request, response) => {
+    handler: (req, res) => {
       return {
         field,
         currentPlayer

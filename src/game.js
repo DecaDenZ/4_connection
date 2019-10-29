@@ -25,6 +25,7 @@ function Game(props) {
   const [isEndGame, setIsEndGame] = useState(false);
 
   useEffect(() => {
+     clearField();
       const intervalID = setInterval(
         axios.get('http://localhost:4000/game/status')
         .then((response) => {
@@ -41,6 +42,21 @@ function Game(props) {
     []
   );
 
+  function clearField(){
+     axios
+      .patch(
+         'http://localhost:4000/game'
+      )
+      .then((res)=> {
+         console.log(res.data);
+         setField(res.data);
+         console.log('Поле очищено')
+      })
+      .catch((error)=> {
+          console.log(error);
+      });
+  }
+
   //проверяем заполнен ли ряд, если да, ход не засчитывается, перехода хода нет
   function checkFullColumn(arr) {
     if (arr.indexOf(0) === -1) {
@@ -48,6 +64,11 @@ function Game(props) {
       return true;
     }
   }
+
+  function noMoveAlert(){
+     alert('Больше нет ходов');
+     clearField();
+ }
 
   // сам ход
   function move(columnId) {
@@ -63,12 +84,17 @@ function Game(props) {
         {currentPlayer: currentPlayer, column: columnId, raw: position, isEndGame: isEndGame }
       )
       .then((res)=> {
-        setField(res.data.field);
-        setCurrentPlayer(res.data.currentPlayer);
-        setIsEndGame(res.data.isEndGame);
+         let newField = res.data.field;
+         if (newField === 'noMove'){
+            noMoveAlert();
+         } else {
+            setField(res.data.field);
+         }
+         setCurrentPlayer(res.data.currentPlayer);
+         setIsEndGame(res.data.isEndGame);
       })
       .catch((error)=> {
-        console.log(error);
+         console.log(error);
       });
   }
 
@@ -78,6 +104,7 @@ function Game(props) {
     alert('Введите имя игрока');
     return <Redirect to="/" / >
   }
+
 
   // если игра закончилась, направляем на конечный экран, передаем имена игроков и номер игрока-победиеля
   if (isEndGame === true) {
