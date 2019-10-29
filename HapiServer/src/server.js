@@ -49,7 +49,6 @@ function checkWinHorizontal(column, row, currentPlayer){
   for (let i = 0; i < 7; i++){
     if (field[i][row] === currentPlayer){
       count++;
-      console.log(field[i][row], count);
     } else {
       count = 0;
     }
