@@ -49,6 +49,7 @@ function checkWinHorizontal(column, row, currentPlayer){
   for (let i = 0; i < 7; i++){
     if (field[i][row] === currentPlayer){
       count++;
+      console.log(field[i][row], count);
     } else {
       count = 0;
     }
@@ -140,14 +141,15 @@ async function createServer() {
     handler: (req, res) => {
         const column = req.payload.column;
         const raw = req.payload.raw;
-        currentPlayer = req.payload.currentPlayer;
         let isEndGame = req.payload.isEndGame;
+
         field[column][raw] = currentPlayer;
+
         if (checkNoMove()){
           field = START_GAME;
           return({field, currentPlayer, isEndGame});
         }
-        if (checkWin(column, raw)){
+        if (checkWin(column, raw, currentPlayer)){
           field = START_GAME;
           isEndGame = true;
           return({field, currentPlayer, isEndGame});

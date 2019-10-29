@@ -28,7 +28,6 @@ function Game(props) {
       const intervalID = setInterval(
         axios.get('http://localhost:4000/game/status')
         .then((response) => {
-          console.log(response.data);
           setField(response.data.field);
           setCurrentPlayer(response.data.currentPlayer);
         })

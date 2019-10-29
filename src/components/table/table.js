@@ -10,8 +10,6 @@ export default function Table (props){
     currentPlayer = props.player2Name;
   }
 
-  console.log(props.field);
-
   return (
   <div>
     <p>Ход игрока {currentPlayer}</p>
