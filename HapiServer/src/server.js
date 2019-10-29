@@ -152,11 +152,9 @@ async function createServer() {
           return({field, currentPlayer, isEndGame});
         }
         if (checkWin(column, raw)){
-          let endField = field.slice();
-          console.log(endField);
-          field = START_GAME;
+          // field = START_GAME;
           isEndGame = true;
-          return({endField, currentPlayer, isEndGame});
+          return({field, currentPlayer, isEndGame});
         }
         currentPlayer = currentPlayer === 1 ? 2 : 1;
         return({field, currentPlayer, isEndGame});
