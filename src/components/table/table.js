@@ -9,7 +9,7 @@ export default function Table (props){
   } else {
     currentPlayer = props.player2Name;
   }
-
+  console.table(props);
   return (
   <div>
     <p>Ход игрока {currentPlayer}</p>

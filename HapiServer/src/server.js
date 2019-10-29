@@ -11,8 +11,16 @@ const START_GAME = [
   [0, 0, 0, 0, 0, 0],
 ];
 
-let field = START_GAME.slice();
+let field = fieldClone();
+
+// fieldClone(field, START_GAME)
+
 let currentPlayer = 1;
+
+function fieldClone(){
+   return START_GAME.map((i) => i.slice());
+}
+
 // -------логика игры ----------
 
 // проверяем является ли ход победным
@@ -116,13 +124,7 @@ function checkNoMove() {
   return true;
 }
 
-// function endGame(winner) {
-//   currentPlayer = winner;
-//   field = START_GAME;
-//   isEndGame = true;
-// }
-
-// ----- сервер и роуы ---------
+// ----- сервер и роуты ---------
 
 async function createServer() {
   // Инициализируем сервер
@@ -138,7 +140,7 @@ async function createServer() {
     method: 'PATCH',
     path: '/game',
     handler: (req, res) => {
-      field = START_GAME.slice();
+      field = fieldClone();
       console.log(field, 'START_GAME', START_GAME);
       return(field);
     }
@@ -148,19 +150,19 @@ async function createServer() {
     method: 'POST',
     path: '/game',
     handler: (req, res) => {
-        const column = req.payload.column;
-        const raw = req.payload.raw;
         let isEndGame = req.payload.isEndGame;
+        const column = req.payload.column;
+        let arr = field[column];
+        const raw = arr.indexOf(0);
 
         field[column][raw] = currentPlayer;
 
         if (checkNoMove()){
-          console.log('нет ходов');
-          field = 'noMove'; // обозначаем полю значение, указывающее на отсутствие ходов
+          field = false; // присваиваем полю значение, указывающее на отсутствие ходов
           return({field, currentPlayer, isEndGame});
         }
         if (checkWin(column, raw, currentPlayer)){
-          field = START_GAME.slice();
+          field = fieldClone();
           isEndGame = true;
           return({field, currentPlayer, isEndGame});
         }

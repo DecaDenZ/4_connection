@@ -25,7 +25,6 @@ function Game(props) {
   const [isEndGame, setIsEndGame] = useState(false);
 
   useEffect(() => {
-     clearField();
       const intervalID = setInterval(
         axios.get('http://localhost:4000/game/status')
         .then((response) => {
@@ -48,7 +47,6 @@ function Game(props) {
          'http://localhost:4000/game'
       )
       .then((res)=> {
-         console.log(res.data);
          setField(res.data);
          console.log('Поле очищено')
       })
@@ -73,15 +71,13 @@ function Game(props) {
   // сам ход
   function move(columnId) {
     columnId--;
-    let arr = field[columnId];
-    if (checkFullColumn(arr)) return;
-    let position = arr.indexOf(0);
+    if (checkFullColumn(field[columnId])) return;
 
 // здесь отправляем запрос на изменение состояния field на сервер
     axios
       .post(
         'http://localhost:4000/game',
-        {currentPlayer: currentPlayer, column: columnId, raw: position, isEndGame: isEndGame }
+        {currentPlayer: currentPlayer, column: columnId, isEndGame: isEndGame }
       )
       .then((res)=> {
          let newField = res.data.field;
