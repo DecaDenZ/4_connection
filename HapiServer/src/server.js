@@ -1,5 +1,4 @@
 'use strict';
-// import React, {useState} from 'react';
 const Hapi = require('@hapi/hapi');
 
 const START_GAME = [
@@ -106,12 +105,12 @@ function checkWinDiagonal(column, row){
 }
 
 //проверяем заполнен ли ряд, если да, ход не засчитывается, перехода хода нет
-function checkFullColumn(arr) {
-  if (arr.indexOf(0) === -1) {
-    alert('этот ряд заполнен');
-    return true;
-  }
-}
+// function checkFullColumn(arr) {
+//   if (arr.indexOf(0) === -1) {
+//     alert('этот ряд заполнен');
+//     return true;
+//   }
+// }
 
 //проверяем есь ли возможнось хода
 function checkNoMove() {
@@ -153,10 +152,11 @@ async function createServer() {
           return({field, currentPlayer, isEndGame});
         }
         if (checkWin(column, raw)){
+          let endField = field.slice();
+          console.log(endField);
           field = START_GAME;
-          console.log(field);
           isEndGame = true;
-          return({field, currentPlayer, isEndGame});
+          return({endField, currentPlayer, isEndGame});
         }
         currentPlayer = currentPlayer === 1 ? 2 : 1;
         return({field, currentPlayer, isEndGame});
