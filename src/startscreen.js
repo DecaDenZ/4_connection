@@ -5,19 +5,20 @@ function StartScreen(){
 
   const [player1Name, setPlayer1Name] = useState('Player1');
   const [player2Name, setPlayer2Name] = useState('Player2');
-  // const player2Input = useRef();
-
-  // function click(){
-    // alert(player2Input.current.value);
-  // }
 
   return (
     <div className="startScreen">
       <h1>Welcome</h1>
       <p>Имя первого игрока</p>
-      <input type="text" value={player1Name} onChange={()=>setPlayer1Name(event.target.value)}  />
+      <input type="text" value={player1Name}
+        onChange={(event)=>setPlayer1Name(event.target.value)}
+        placeholder='Введите имя игрока 1'
+      />
       <p>Имя ворого игрока</p>
-      <input type="text" value={player2Name} onChange={()=>setPlayer2Name(event.target.value)} placeholder='Введите имя игрока2'/>
+      <input type="text" value={player2Name}
+        onChange={(event)=>setPlayer2Name(event.target.value)}
+        placeholder='Введите имя игрока 2'
+      />
 
       <p>
         <Link to={{
