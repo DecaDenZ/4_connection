@@ -56,17 +56,13 @@ function Game(props) {
   }
 
   //проверяем заполнен ли ряд, если да, ход не засчитывается, перехода хода нет
+  // остваляем функцию здесь, чтобы обрабатывался алерт
   function checkFullColumn(arr) {
     if (arr.indexOf(0) === -1) {
       alert('этот ряд заполнен');
       return true;
     }
   }
-
-  function noMoveAlert(){
-     alert('Больше нет ходов');
-     clearField();
- }
 
   // сам ход
   function move(columnId) {
@@ -80,9 +76,9 @@ function Game(props) {
         {currentPlayer: currentPlayer, column: columnId, isEndGame: isEndGame }
       )
       .then((res)=> {
-         let newField = res.data.field;
-         if (newField === 'noMove'){
-            noMoveAlert();
+         if (!res.data.field){   // если ходов больше нет, сервер присваивает переменной field значение false
+            alert('Больше нет ходов');
+            clearField();
          } else {
             setField(res.data.field);
          }
@@ -100,7 +96,6 @@ function Game(props) {
     alert('Введите имя игрока');
     return <Redirect to="/" / >
   }
-
 
   // если игра закончилась, направляем на конечный экран, передаем имена игроков и номер игрока-победиеля
   if (isEndGame === true) {
