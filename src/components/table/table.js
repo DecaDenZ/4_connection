@@ -9,18 +9,16 @@ export default function Table (props){
   } else {
     currentPlayer = props.player2Name;
   }
-  console.table(props);
   return (
   <div>
     <p>Ход игрока {currentPlayer}</p>
-    <div className="table">
-      <Column columnId='1' onColumnPress={props.onColumnPress} data={props.field[0]}/>
-      <Column columnId='2' onColumnPress={props.onColumnPress} data={props.field[1]}/>
-      <Column columnId='3' onColumnPress={props.onColumnPress} data={props.field[2]}/>
-      <Column columnId='4' onColumnPress={props.onColumnPress} data={props.field[3]}/>
-      <Column columnId='5' onColumnPress={props.onColumnPress} data={props.field[4]}/>
-      <Column columnId='6' onColumnPress={props.onColumnPress} data={props.field[5]}/>
-      <Column columnId='7' onColumnPress={props.onColumnPress} data={props.field[6]}/>
+    <div className="table">{
+      props.field.map((el, i) =>{
+         return (
+            <Column columnId={i+1} onColumnPress={props.onColumnPress} data={el} key={i}/>
+         );
+      })
+   }
     </div>
   </div>
 )

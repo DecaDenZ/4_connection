@@ -3,15 +3,16 @@ import Cell from '../cell/cell';
 
 function Column (props){
   return (
-  <div className="column" onClick={() => props.onColumnPress(props.columnId) }>
-    <Cell value={props.data[0]}/>
-    <Cell value={props.data[1]}/>
-    <Cell value={props.data[2]}/>
-    <Cell value={props.data[3]}/>
-    <Cell value={props.data[4]}/>
-    <Cell value={props.data[5]}/>
-  </div>
-)
+    <div className="column" onClick={() => props.onColumnPress(props.columnId) }>
+      {
+         props.data.map((el, key) => {
+            return (
+               <Cell className="cell" value={el} key={key}/>
+            );
+         })
+      }
+   </div>
+ )
 }
 
 export default Column;
