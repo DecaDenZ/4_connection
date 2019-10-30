@@ -5,17 +5,25 @@ body {
   border: solid 3px;
 }
 
-.table {
+/* .table {
   transform:rotate(270deg);
+} */
+
+.table {
+   display:flex;
+   justify-content: center;
 }
 
 .column {
-  padding: 10px;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .cell {
   border: solid 1px;
   padding: 10px;
+  display: flex;
+  flex:1 ;
 }
 .chip-red {
   border: solid 1px;

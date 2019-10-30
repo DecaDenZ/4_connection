@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import Table from './components/table/table';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 function Game(props) {
 
@@ -123,6 +124,10 @@ function Game(props) {
              player2Name={player2Name}
              field={field}
       />
+      <Link to={{
+       pathname:'/',
+       state:{}
+    }}>Сбросить</Link>
     </div>
   );
 }
