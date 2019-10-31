@@ -8,21 +8,21 @@ import {Link} from 'react-router-dom';
 function Game(props) {
 
 //нужно убрать отсюда, но сделать обнуление состояния поля при старте игры
-  const START_GAME = [
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-  ]
+  // const START_GAME = [
+  //   [0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0],
+  // ]
 
   const player1Name = props.location.state.player1Name;
   const player2Name = props.location.state.player2Name;
 
   const [currentPlayer, setCurrentPlayer] = useState(1);
-  const [field, setField] = useState(START_GAME);
+  const [field, setField] = useState(props.location.state.field);
   const [isEndGame, setIsEndGame] = useState(false);
 
   useEffect(() => {
@@ -98,6 +98,10 @@ function Game(props) {
     return <Redirect to="/" / >
   }
 
+ //  if (props.location.state.restartGame) {
+ //     clearField();
+ // }
+
   // если игра закончилась, направляем на конечный экран, передаем имена игроков и номер игрока-победиеля
   if (isEndGame === true) {
     return <Redirect to={
@@ -125,9 +129,8 @@ function Game(props) {
              field={field}
       />
       <Link to={{
-       pathname:'/',
-       state:{}
-    }}>Сбросить</Link>
+         pathname:'/'
+                  }}>Сбросить</Link>
     </div>
   );
 }

@@ -3,9 +3,19 @@ import {Link} from 'react-router-dom';
 
 function StartScreen(){
 
+   const START_GAME = [
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+   ]
   const [player1Name, setPlayer1Name] = useState('Player1');
   const [player2Name, setPlayer2Name] = useState('Player2');
-
+  // eslint-disable-next-line
+  const [field, setField] = useState(START_GAME);
   return (
     <div className="startScreen">
       <h1>Welcome</h1>
@@ -25,7 +35,7 @@ function StartScreen(){
           pathname:'/game',
           state:{
             player1Name:player1Name,
-            player2Name:player2Name
+            player2Name:player2Name,
           }
         }}>Начать игру</Link>
       </p>
