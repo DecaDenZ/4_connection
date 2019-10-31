@@ -5,13 +5,10 @@ body {
   border: solid 3px;
 }
 
-/* .table {
-  transform:rotate(270deg);
-} */
-
 .table {
    display:flex;
    justify-content: center;
+   margin: 20px;
 }
 
 .column {
@@ -20,10 +17,11 @@ body {
 }
 
 .cell {
-  border: solid 1px;
+  border: solid 2px;
   padding: 10px;
   display: flex;
   flex:1 ;
+  margin: 2px;
 }
 .chip-red {
   border: solid 1px;
