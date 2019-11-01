@@ -36,6 +36,7 @@ function StartScreen(){
           state:{
             player1Name:player1Name,
             player2Name:player2Name,
+            field:field
           }
         }}>Начать игру</Link>
       </p>

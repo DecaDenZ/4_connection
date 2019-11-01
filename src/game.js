@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import Table from './components/table/table';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 
 function Game(props) {
 
@@ -117,6 +117,11 @@ function Game(props) {
     />
   }
 
+  function reset(){
+    clearField();
+    return <Redirect to="/"/>
+ }
+
   return (
     <div className="App">
       <p>{player1Name}</p>
@@ -128,11 +133,12 @@ function Game(props) {
              player2Name={player2Name}
              field={field}
       />
-      <Link to={{
-         pathname:'/'
-         // нарисовать кнопку при нажати на которую срабатывает функция вызывающая
-         //clearField и отправляющая нас на стартовую страницу
-                  }}>Сбросить</Link>
+      <input
+         type="button"
+         className="reset-button"
+         onClick={reset}
+         value='Очистить поле'
+         />
     </div>
   );
 }
