@@ -7,17 +7,6 @@ import axios from 'axios';
 
 function Game(props) {
 
-//нужно убрать отсюда, но сделать обнуление состояния поля при старте игры
-  // const START_GAME = [
-  //   [0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0],
-  // ]
-
   const player1Name = props.location.state.player1Name;
   const player2Name = props.location.state.player2Name;
 
