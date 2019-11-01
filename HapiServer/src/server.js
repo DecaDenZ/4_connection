@@ -141,7 +141,6 @@ async function createServer() {
     path: '/game',
     handler: (req, res) => {
       field = fieldClone();
-      console.log(field, 'START_GAME', START_GAME);
       return(field);
     }
   });

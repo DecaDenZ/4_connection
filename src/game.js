@@ -4,6 +4,7 @@ import Table from './components/table/table';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 // import {Link} from 'react-router-dom';
+export const MoveContext = React.createContext();
 
 function Game(props) {
 
@@ -13,6 +14,8 @@ function Game(props) {
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [field, setField] = useState(props.location.state.field);
   const [isEndGame, setIsEndGame] = useState(false);
+
+
 
   useEffect(() => {
       const intervalID = setInterval(
@@ -55,6 +58,8 @@ function Game(props) {
   }
 
   // сам ход
+// прописываем его в контекст
+
   function move(columnId) {
     columnId--;
     if (checkFullColumn(field[columnId])) return;
@@ -87,11 +92,8 @@ function Game(props) {
     return <Redirect to="/" / >
   }
 
- //  if (props.location.state.restartGame) {
- //     clearField();
- // }
 
-  // если игра закончилась, направляем на конечный экран, передаем имена игроков и номер игрока-победиеля
+   // если игра закончилась, направляем на конечный экран, передаем имена игроков и номер игрока-победиеля
   if (isEndGame === true) {
     return <Redirect to={
       {
@@ -106,17 +108,15 @@ function Game(props) {
     />
   }
 
-  function reset(){
-    clearField();
-    return <Redirect to="/"/>
- }
+
 
   return (
     <div className="App">
+    <MoveContext.Provider value={move}/>
       <p>{player1Name}</p>
       vs
       <p>{player2Name}</p>
-      <Table onColumnPress={move}
+      <Table onColumnPress={move} // нужно передать через контекст
              currentPlayer={currentPlayer}
              player1Name={player1Name}
              player2Name={player2Name}
@@ -125,7 +125,10 @@ function Game(props) {
       <input
          type="button"
          className="reset-button"
-         onClick={reset}
+         onClick={()=> {
+            clearField();
+            return <Redirect to="/"/>
+         }}
          value='Очистить поле'
          />
     </div>
