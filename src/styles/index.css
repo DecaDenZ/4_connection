@@ -16,6 +16,11 @@ body {
   flex-direction: column-reverse;
 }
 
+.column:hover {
+   border: solid 2px
+
+}
+
 .cell {
   border: solid 2px;
   padding: 10px;
